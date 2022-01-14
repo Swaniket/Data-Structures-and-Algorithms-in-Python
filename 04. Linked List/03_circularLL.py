@@ -115,24 +115,30 @@ class CircularSinglyLL:
             nextNode = tempNode.next
             tempNode.next = nextNode.next
 
+    # Delete the entire LL
+    def deleteLL(self): # Time Complexity -> O(1)
+        self.head = None
+        self.tail.next = None
+        self.tail = None
+
 
 
 if __name__ == "__main__":
     ll = CircularSinglyLL()
 
     ll.createLL(10)
-
-    # ll.insertLL(0,0)
-    # ll.insertLL(2,1)
-    # ll.insertLL(3,1)
-    # ll.insertLL(2,2)
+    ll.insertLL(0,0)
+    ll.insertLL(2,1)
+    ll.insertLL(3,1)
+    ll.insertLL(2,2)
 
     print([node.value for node in ll])
 
     # ll.travarseLL()
     # print(ll.searchLL(5))
 
-    ll.deleteNode(0)
+    # ll.deleteNode(0)
+    ll.deleteLL()
 
     print([node.value for node in ll])
         
