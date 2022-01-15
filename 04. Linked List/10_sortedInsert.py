@@ -1,7 +1,6 @@
 # Write down a function that takes a linked list and a data item x as a parameter,
 # inserts the data item in a sorted way and returns the head of the linked list
 
-from os import link
 from GeneralLinkedList import LinkedList, Node
 
 def sortedInsert(ll, nodeValue): 
