@@ -1,7 +1,6 @@
 # Implement an algorithm to find the nth to last element of a Singly Linked List.
 from GeneralLinkedList import LinkedList
 
-
 # Time Complexity: O(n)
 # Space Complexity: O(1)
 def nthToLast(ll, n):
