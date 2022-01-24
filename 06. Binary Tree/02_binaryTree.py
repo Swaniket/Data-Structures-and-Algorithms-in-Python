@@ -51,13 +51,35 @@ def levelOrderTraversal(rootNode): # Time Complexity -> O(n), Space Complexity -
                 customQueue.enqueue(root.value.leftChild) # Value comes from queue class
             if root.value.rightChild is not None:
                 customQueue.enqueue(root.value.rightChild)
-    
+
+# Perfrom search in BT using Level Order Traversal
+def searchBT(rootNode, nodeValue): # Time Complexity -> O(n), Space Complexity -> O(n)
+    if not rootNode:
+        return "The BT doesn't exists"
+    else: 
+        customQueue = queue.Queue()
+        customQueue.enqueue(rootNode)
+        while not(customQueue.isEmpty()):
+            root = customQueue.dequeue()
+            if root.value.data == nodeValue:
+                return "Success"
+            if root.value.leftChild is not None:
+                customQueue.enqueue(root.value.leftChild)
+            if root.value.rightChild is not None:
+                customQueue.enqueue(root.value.rightChild)
+        return "Not Found"
+
 
 if __name__ == "__main__":
     newBT = TreeNode("Drinks")
-
-    newBT.leftChild = TreeNode("Hot")
-    newBT.rightChild = TreeNode("Cold")
+    leftChild = TreeNode("Hot")
+    tea = TreeNode("Tea")
+    coffee = TreeNode("Coffee")
+    leftChild.leftChild = tea
+    leftChild.rightChild = coffee
+    rightChild = TreeNode("Cold")
+    newBT.leftChild = leftChild
+    newBT.rightChild = rightChild
 
     # print("PRE ORDER")
     # preOrderTraversal(newBT)
@@ -68,4 +90,6 @@ if __name__ == "__main__":
     # print("POST ORDER")
     # postOrderTraversal(newBT)
 
-    levelOrderTraversal(newBT)
+    # levelOrderTraversal(newBT)
+
+    print(searchBT(newBT, "Tea"))
