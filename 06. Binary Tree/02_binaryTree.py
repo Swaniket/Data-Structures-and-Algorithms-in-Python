@@ -69,6 +69,31 @@ def searchBT(rootNode, nodeValue): # Time Complexity -> O(n), Space Complexity -
                 customQueue.enqueue(root.value.rightChild)
         return "Not Found"
 
+# We will insert in the 1st available empty node via level order traversal
+def insertNodeBT(rootNode, newNode):
+    # Where there is no rootnode
+    if not rootNode:
+        rootNode = newNode
+    # When there is some nodes
+    else:
+        customQueue = queue.Queue()
+        customQueue.enqueue(rootNode)
+        while not(customQueue.isEmpty()):
+            root = customQueue.dequeue()
+            # Check vacent space in leftchild
+            if root.value.leftChild is not None:
+                customQueue.enqueue(root.value.leftChild)
+            else:
+                root.value.leftChild = newNode
+                return "Successfully Inserted"
+            # Check vacent space in rightchild
+            if root.value.rightChild is not None:
+                customQueue.enqueue(root.value.rightChild)
+            else:
+                root.value.rightChild = newNode
+                return "Successfully Inserted"
+    
+
 
 if __name__ == "__main__":
     newBT = TreeNode("Drinks")
