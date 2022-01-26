@@ -92,7 +92,78 @@ def insertNodeBT(rootNode, newNode):
             else:
                 root.value.rightChild = newNode
                 return "Successfully Inserted"
-    
+
+# Helper for delete functionality - Returns the deepest node 
+def getDeepestNode(rootNode):
+    if not rootNode:
+        return
+    else:
+        customQueue = queue.Queue()
+        customQueue.enqueue(rootNode)
+        while not(customQueue.isEmpty()):
+            root = customQueue.dequeue()
+            if root.value.leftChild is not None:
+                customQueue.enqueue(root.value.leftChild)
+            if root.value.rightChild is not None:
+                customQueue.enqueue(root.value.rightChild)
+        deepestNode = root.value
+        return deepestNode
+
+# Helper for delete functionality - Delete the deepest node
+def deleteDeepestNode(rootNode, deepestNode):
+    if not rootNode:
+        return
+    else:
+        customQueue = queue.Queue()
+        customQueue.enqueue(rootNode)
+        while not(customQueue.isEmpty()):
+            root = customQueue.dequeue()
+            if root.value is deepestNode:
+                root.value = None
+                return
+            if root.value.rightChild:
+                if root.value.rightChild is deepestNode:
+                    root.value.rightChild = None
+                    return
+                else:
+                    customQueue.enqueue(root.value.rightChild)
+            if root.value.leftChild:
+                if root.value.leftChild is deepestNode:
+                    root.value.leftChild = None
+                    return
+                else:
+                    customQueue.enqueue(root.value.leftChild)
+
+# Delete a perticular node from BT
+def deleteNodeBT(rootNode, node): # Time Complexity -> O(n), Space Complexity -> O(n)
+    if not rootNode:
+        return "The BT doesn't exists"
+    else:
+        customQueue = queue.Queue()
+        customQueue.enqueue(rootNode)
+        while not(customQueue.isEmpty()):
+            root = customQueue.dequeue()
+            # Check if the visisted node is what we want to delete
+            if root.value.data == node:
+                # Replace the current node with the deepest node
+                dNode = getDeepestNode(rootNode)
+                root.value.data = dNode.data
+                deleteDeepestNode(rootNode, dNode)
+                return "The node has been successfully deleted"
+            if root.value.leftChild is not None:
+                customQueue.enqueue(root.value.leftChild)
+            if root.value.rightChild is not None:
+                customQueue.enqueue(root.value.rightChild)
+        return "Failed to delete"
+
+# Delete entire BT
+def deleteBT(rootNode): # Time Complexity -> O(1), Space Complexity -> O(1)
+    rootNode.data = None
+    rootNode.leftChild = None
+    rootNode.rightChild = None
+    return "The BT has been deleted"
+
+
 
 
 if __name__ == "__main__":
@@ -117,4 +188,13 @@ if __name__ == "__main__":
 
     # levelOrderTraversal(newBT)
 
-    print(searchBT(newBT, "Tea"))
+    # print(searchBT(newBT, "Tea"))
+
+    # deepestNode = getDeepestNode(newBT)
+    # print(deepestNode.data)
+
+    # newNode = getDeepestNode(newBT)
+    # deleteDeepestNode(newBT, newNode)
+
+    deleteNodeBT(newBT, 'Hot')
+    levelOrderTraversal(newBT)
