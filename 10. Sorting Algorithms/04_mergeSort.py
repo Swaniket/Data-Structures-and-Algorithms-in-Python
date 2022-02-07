@@ -10,58 +10,54 @@
 # Cons:
 #   - Bad Space complexity O(n)
 
-# It's a helper function which merges two subarray of custom list
-# l = left index
-# m = middle of the list
-# r = last of the list
-def merge(customList, l, m, r): # Time Complexity -> O(n)
-    # No. of elements in the 1st sub array
-    n1 = m - l + 1
-    # No. of elements in the 2nd sub array
-    n2 = r - m
+def mergeTwoSortedArray(a,b, arr):
+    i = j = k = 0
 
-    L = [0] * (n1)
-    R = [0] * (n2)
+    lenA = len(a)
+    lenB = len(b)
 
-    # Copy elements to subarray
-    for i in range(0, n1):
-        L[i] = customList[l+i]
-    for j in range(0, n2):
-        R[j] = customList[m+1+j]
-
-    # Merge temp sub arrays into the list in a sorted array
-    i = 0
-    j = 0
-    k = l
-    while i < n1 and j < n2:
-        if L[i] <= R[j]:
-            customList[k] = L[i]
+    # Iterate through both of the list till reach end in any of 'em
+    while i < lenA and j < lenB:
+        if a[i] <= b[j]:
+            arr[k] = a[i]
             i += 1
         else:
-            customList[k] = R[j]
+            arr[k] = b[j]
             j += 1
         k += 1
-    while i < n1:
-        customList[k] = L[i]
+
+    while i < lenA:
+        arr[k] = a[i]
         i += 1
         k += 1
-    while j < n2:
-        customList[k] = R[j]
+    while j < lenB:
+        arr[k] = b[j]
         j += 1
         k += 1
 
-# l = left index - start index, r = right index - end index
-# Time Complexity -> O(NlogN)
-# Space Complexity -> O(n)
-def mergeSort(customList, l, r):
-    if l < r:
-        m = (l+(r-1))//2
-        mergeSort(customList, l, m)
-        mergeSort(customList, m + 1, r)
-        merge(customList, l, m, r)
-    return customList
+
+def mergeSort(arr):
+    if len(arr) <= 1:
+        return
+
+    mid = len(arr)//2
+    left = arr[:mid]
+    right = arr[mid:]
+
+    mergeSort(left)
+    mergeSort(right)
+
+    mergeTwoSortedArray(left, right, arr)
 
 if __name__ == "__main__":
-    cList = [2,1,7,6,5,3,4,9,8]
+    test_cases = [
+        [10, 3, 15, 7, 8, 23, 98, 29],
+        [],
+        [3],
+        [9,8,7,2],
+        [1,2,3,4,5]
+    ]
 
-    print(mergeSort(cList, 0, 8))
+    for arr in test_cases:
+        mergeSort(arr)
+        print(arr)
